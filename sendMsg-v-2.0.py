@@ -20,9 +20,9 @@ def send_mail( send_from, pwd, send_to, subject, text, files=[], server="smtp.gm
     msg['To'] = COMMASPACE.join(send_to)
     msg['Date'] = formatdate(localtime = True)
     msg['Subject'] = subject
+    msg.attach( MIMEText(text) )
     if attach:
-    	msg.attach( MIMEText(text) )
-    	for f in files:
+        for f in files:
         	part = MIMEBase('application', "octet-stream")
         	part.set_payload( open(f,"rb").read() )
         	encoders.encode_base64(part)
@@ -63,7 +63,6 @@ if __name__ == '__main__':
 		else:
 			attach = True
 			file = [sys.argv[3],]
-	#       file = ['/home/adel/MSD_Adel-Last.pdf',]
 	
 		for email in emails_list:
 			try:
